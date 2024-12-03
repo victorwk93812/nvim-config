@@ -17,6 +17,25 @@ return {
         -- local cmp_lsp = require("cmp_nvim_lsp")
         -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local custom_attach = function()
+            print("LSP started.");
+
+            vim.keymap.set('n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>')
+            vim.keymap.set('n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>')
+            vim.keymap.set('n','<leader>K','<cmd>lua vim.lsp.buf.hover()<CR>')
+            vim.keymap.set('n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>')
+            vim.keymap.set('n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>')
+            vim.keymap.set('n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>')
+            vim.keymap.set('n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>')
+            vim.keymap.set('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+            vim.keymap.set('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+            vim.keymap.set('n','<leader>ah','<cmd>lua vim.lsp.buf.hover()<CR>')
+            vim.keymap.set('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>')
+            vim.keymap.set('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>')
+            vim.keymap.set('n','<leader>=', '<cmd>lua vim.lsp.buf.format()<CR>')
+            vim.keymap.set('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+            vim.keymap.set('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+        end
         -- local capabilities = vim.tbl_deep_extend(
         --     "force",
         --     {},
@@ -35,6 +54,7 @@ return {
                 function(server_name) -- default handler (optional)
                     -- Setup LSP autocompletion capabilities on each installation of LSP
                     require("lspconfig")[server_name].setup {
+                        on_attach = custom_attach, 
                         capabilities = capabilities
                     }
                 end,

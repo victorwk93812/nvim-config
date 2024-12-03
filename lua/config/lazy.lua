@@ -26,11 +26,16 @@ require("lazy").setup({
 	require "plugins.telescope", 
 	require "plugins.treesitter", 
 	require "plugins.vimtex",
-    require "plugins.peek", 
-    require "plugins.undotree", 
 	
     require "plugins.luasnip", 
     require "plugins.lsp", 
+
+    require "plugins.peek", 
+    require "plugins.undotree", 
+
+    require "plugins.render-markdown", 
+
+    require"plugins.codecompanion", 
 	-- automatically check for plugin updates
 	-- checker = { enabled = true },
 })

@@ -6,6 +6,14 @@ return {
         "nvim-tree/nvim-web-devicons",
     },
     config = function()
-        require("nvim-tree").setup {}
+        require("nvim-tree").setup {
+            update_cwd = true,
+            view = {
+                width = 30, 
+            }, 
+            filters = {
+                git_ignored = false, 
+            },
+        }
     end,
 }

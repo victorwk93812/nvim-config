@@ -14,3 +14,6 @@ require "config.keymaps"
 
 -- Load lua/config/lazy.lua
 require "config.lazy"
+--
+-- Load lua/config/autocmds.lua
+require "config.autocmds"

@@ -19,21 +19,7 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         local custom_attach = function()
             print("LSP started.");
-
-            vim.keymap.set('n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', { desc = "LSP go to declaration" })
-            vim.keymap.set('n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "LSP go to definition" })
-            vim.keymap.set('n','<leader>K','<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "LSP hover definition" })
-            vim.keymap.set('n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', { desc = "LSP go to references" })
-            vim.keymap.set('n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = "LSP vim.lsp.buf.signature_help()" })
-            vim.keymap.set('n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', { desc = "LSP vim.lsp.buf.implementation()" })
-            vim.keymap.set('n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>', { desc = "LSP vim.lsp.buf.type_definition()" })
-            vim.keymap.set('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>', { desc = "LSP vim.lsp.buf.document_symbol()" })
-            vim.keymap.set('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { desc = "LSP vim.lsp.buf.workspace_symbol()" })
-            vim.keymap.set('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = "LSP code quickfix suggestion" })
-            vim.keymap.set('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>', { desc = "LSP vim.lsp.buf.rename()" })
-            vim.keymap.set('n','<leader>=', '<cmd>lua vim.lsp.buf.format()<CR>', { desc = "LSP vim.lsp.buf.format()" })
-            vim.keymap.set('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', { desc = "LSP vim.lsp.buf.incoming_calls()" })
-            vim.keymap.set('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', { desc = "LSP vim.lsp.buf.outgoint_calls()" })
+            require("config.keymaps").bind_lsp_attach_keymaps()
         end
         -- local capabilities = vim.tbl_deep_extend(
         --     "force",
@@ -81,21 +67,12 @@ return {
                     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
-            mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-g>"] = cmp.mapping.complete(),
-            }),
+            mapping = require("config.keymaps").nvim_cmp_keymaps(cmp, cmp_select),
             sources = cmp.config.sources(
                 {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' }, -- For luasnip users.
-                }, 
-                {
                     { name = 'buffer' },
-                },
-                {
                     { name = 'path' },
                 }
             )

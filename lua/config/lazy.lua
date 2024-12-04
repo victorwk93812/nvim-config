@@ -22,29 +22,31 @@ require("lazy").setup({
     -- List plugins here
     require "plugins.lualine",
     require "plugins.catppuccin",
-    require "plugins.indent-blankline", 
-    require "plugins.nvim-tree", 
+    require "plugins.indent-blankline",
+    require "plugins.nvim-tree",
 
-    require "plugins.telescope", 
+    require "plugins.telescope",
 
-    require "plugins.treesitter", 
+    require "plugins.treesitter",
 
     require "plugins.vimtex",
 
-    require "plugins.luasnip", 
-    require "plugins.lsp", 
+    require "plugins.luasnip",
+    require "plugins.lsp",
 
-    require "plugins.peek", 
+    require "plugins.trouble",
 
-    require "plugins.todo-comments", 
+    require "plugins.peek",
 
-    require "plugins.undotree", 
+    require "plugins.todo-comments",
 
-    require "plugins.render-markdown", 
+    require "plugins.undotree",
 
-    require "plugins.codecompanion", 
+    require "plugins.render-markdown",
 
-    require "plugins.which-key", 
+    require "plugins.codecompanion",
+
+    require "plugins.which-key",
     -- automatically check for plugin updates
     -- checker = { enabled = true },
 })

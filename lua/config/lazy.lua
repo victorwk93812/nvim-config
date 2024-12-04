@@ -44,6 +44,8 @@ require("lazy").setup({
 
     require "plugins.lazygit", 
 
+    require "plugins.auto-session",
+
     require "plugins.undotree",
 
     require "plugins.render-markdown",

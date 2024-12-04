@@ -37,5 +37,6 @@ return{
             })
         end,
         cmd = { "CodeCompanionActions", "Telescope codecompanion" }, -- Lazy-load commands
+        keys = require("config.keymaps").codecompanion_keymaps,
     }
 }

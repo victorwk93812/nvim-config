@@ -1,15 +1,18 @@
+local M = {}
+
 local nvimtreegroup = vim.api.nvim_create_augroup("NvimTreeAutoOpen", { clear = true })
-local function initial_nvimtree()
+function M.initial_nvimtree()
+    --[[
+        Open NvimTree on file open
+        An opened NvimTree conflicts with the auto-session plugin, where the latter could not save a session containing an opened NvimTree. 
+        May resolve this issue in the future if I have time. 
+    --]]
     vim.api.nvim_create_autocmd("BufReadPost", {
         group = nvimtreegroup,
         pattern = "*",
         callback = function()
             if vim.fn.bufname("%") ~= "" and vim.bo.filetype ~= "directory" then
                 vim.cmd("NvimTreeToggle")
-            -- vim.cmd("winc l")
-                -- local current_buf = vim.api.nvim_get_current_buf()
-                -- local win_id = vim.api.nvim_buf_get_option(current_buf, 'bufwinid')
-                -- vim.api.nvim_set_current_win(win_id)
             end
         end,
     })
@@ -20,5 +23,4 @@ local function initial_nvimtree()
     })
 end
 
--- Nvim tree on file open
-initial_nvimtree()
+return M

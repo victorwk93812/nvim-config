@@ -5,6 +5,7 @@ return {
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
+    keys = require("config.keymaps").nvimtree_keymaps,
     config = function()
         require("nvim-tree").setup {
             update_cwd = true,

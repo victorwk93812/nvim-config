@@ -19,7 +19,7 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         local custom_attach = function()
             print("LSP started.");
-            require("config.keymaps").bind_lsp_attach_keymaps()
+            require("config.keymaps").bind_lsp_attach_keys()
         end
         -- local capabilities = vim.tbl_deep_extend(
         --     "force",

@@ -40,6 +40,10 @@ require("lazy").setup({
 
     require "plugins.todo-comments",
 
+    require "plugins.gitsigns", 
+
+    require "plugins.lazygit", 
+
     require "plugins.undotree",
 
     require "plugins.render-markdown",

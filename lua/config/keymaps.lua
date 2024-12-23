@@ -9,6 +9,15 @@ local function load_useful_keymaps()
     --[[ 
         Useful keymaps thanks to ThePrimeagen, some reddit posts and more. 
     --]]
+    -- Normal mode keymaps
+    vim.keymap.set("n", "<leader>o", function()
+        return "m`" .. vim.v.count .. "o<Esc>``"
+    end, { desc = "Insert <count> (default 1) lines below current line", expr = true })
+
+    -- Insert 'n' lines above current line staying in normal mode (e.g. use 5<leader>O)
+    vim.keymap.set("n", "<leader>O", function()
+        return "m`" .. vim.v.count .. "O<Esc>``"
+    end, { desc = "Insert <count> (default 1) lines above current line", expr = true })
 
     -- Visual mode keymaps
     vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Select lines in v-mode, move selected lines down and auto-indent" })
@@ -38,7 +47,25 @@ local function load_useful_keymaps()
     vim.keymap.set('n', '<leader>df', ':lua vim.diagnostic.open_float()<CR>', { desc = "Open floating diagnostics window" })
 
     -- Lazy UI keymap
-    vim.keymap.set("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy.nvim UI" })
+    vim.keymap.set("n", "<leader>L", ":Lazy<CR>", { desc = "Open Lazy.nvim UI" })
+
+    -- Single file quick compile/run keybindings
+    vim.api.nvim_set_keymap('n', '<F8>', [[:lua QuickRun()<CR>]], { noremap = true, silent = true, desc = "Quick compile/interpret" })
+
+    function QuickRun()
+        if vim.bo.filetype == "python" then
+            vim.cmd("w") -- Save the file
+            vim.cmd("!python3 % > %:r-output.txt") -- Run the Python script and redirect output
+        elseif vim.bo.filetype == "c" then
+            vim.cmd("w") -- Save the file
+            vim.cmd("!gcc -o %:r.out %") -- Compile C program and output
+        elseif vim.bo.filetype == "cpp" then
+            vim.cmd("w") -- Save the file
+            vim.cmd("!g++ -o %:r.out %") -- Compile C++ program and output
+        else
+            print("Not a C/C++/Python file!")
+        end
+    end
 end
 
 load_useful_keymaps()

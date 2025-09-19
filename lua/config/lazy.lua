@@ -27,7 +27,7 @@ require("lazy").setup({
 
     require "plugins.telescope",
 
-    -- require "plugins.treesitter",
+    require "plugins.treesitter",
 
     require "plugins.vimtex",
 
@@ -36,7 +36,7 @@ require("lazy").setup({
 
     require "plugins.trouble",
 
-    require "plugins.peek",
+    -- require "plugins.peek",
 
     require "plugins.todo-comments",
 
@@ -49,6 +49,8 @@ require("lazy").setup({
     require "plugins.undotree",
 
     require "plugins.render-markdown",
+
+    require "plugins.image-nvim", 
 
     require "plugins.codecompanion",
 

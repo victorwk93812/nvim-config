@@ -52,7 +52,9 @@ require("lazy").setup({
 
     require "plugins.image-nvim", 
 
-    require "plugins.codecompanion",
+    -- require "plugins.codecompanion", -- Still too buggy as of 2025-12-06
+
+    require "plugins.copilot",
 
     require "plugins.which-key",
     -- automatically check for plugin updates

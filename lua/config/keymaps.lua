@@ -117,6 +117,34 @@ function M.codecompanion_keymaps()
     vim.cmd([[cab cc CodeCompanion]])
 end
 
+function M.copilot_keymaps()
+    local suggestion = require("copilot.suggestion")
+    local panel = require("copilot.panel")
+
+    -- Suggestion Mappings (Insert Mode)
+    vim.keymap.set('i', '<M-\'>', function() 
+      if suggestion.is_visible() then suggestion.accept() else suggestion.next() end 
+    end, { desc = "[Copilot] Accept suggestion" })
+
+    vim.keymap.set('i', '<M-]>', function() 
+      if suggestion.is_visible() then suggestion.next() end 
+    end, { desc = "[Copilot] Next suggestion" })
+
+    vim.keymap.set('i', '<M-[>', function() 
+      if suggestion.is_visible() then suggestion.prev() end 
+    end, { desc = "[Copilot] Previous suggestion" })
+
+    vim.keymap.set('i', '<C-]>', function() 
+      if suggestion.is_visible() then suggestion.dismiss() end 
+    end, { desc = "[Copilot] Dismiss suggestion" })
+
+
+    -- Panel Mappings (Normal Mode)
+    vim.keymap.set('n', '<Leader>cp', function() 
+      panel.open() 
+    end, { desc = "[Copilot] Open Panel" })
+end
+
 function M.auto_session_keymaps()
     vim.keymap.set("n", "<leader>wr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" }) -- restore last workspace session for current directory
     vim.keymap.set("n", "<leader>ws", "<cmd>SessionSave<CR>", { desc = "Save session for auto session root dir" }) -- save workspace session for current working directory

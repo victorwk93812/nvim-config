@@ -10,7 +10,7 @@ return {
         require("nvim-tree").setup {
             update_cwd = true,
             view = {
-                width = 30, 
+                width = 25, 
             }, 
             filters = {
                 git_ignored = false, 

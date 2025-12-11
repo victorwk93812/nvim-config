@@ -50,6 +50,8 @@ require("lazy").setup({
 
     require "plugins.render-markdown",
 
+    require "plugins.cord",
+
     require "plugins.image-nvim", 
 
     -- require "plugins.codecompanion", -- Still too buggy as of 2025-12-06

@@ -50,6 +50,8 @@ require("lazy").setup({
 
     require "plugins.render-markdown",
 
+    require "plugins.nabla",
+
     require "plugins.cord",
 
     require "plugins.image-nvim", 

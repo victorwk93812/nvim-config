@@ -13,7 +13,7 @@ return {
                 width = 25, 
             }, 
             filters = {
-                git_ignored = false, 
+                git_ignored = true, -- git_ignored = false, displays git ignored files
             },
         }
     end,

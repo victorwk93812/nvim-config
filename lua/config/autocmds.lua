@@ -10,7 +10,18 @@ function M.setup_workspace()
         "rust",
         "javascript",
         "typescript",
+        "yaml",
+        "json",
+        "toml",
+        "java",
+        "html",
+        "css",
         "c",
+        "sh",
+        "zsh",
+        "bash",
+        "cs",
+        "php",
         "cpp",
     }
 
@@ -56,18 +67,8 @@ function M.setup_workspace()
         end,
     })
 end
--- function M.init_nvimtree()
---     vim.api.nvim_create_autocmd("VimEnter", {
---         callback = function()
---             if vim.fn.argc() > 0 then
---                 require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
---             end
---         end,
---     })
--- end
---
+
 -- !!! CALL THE FUNCTIONS HERE !!!
 M.setup_workspace()
--- M.init_nvimtree()
---
+
 return M

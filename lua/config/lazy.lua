@@ -50,6 +50,10 @@ require("lazy").setup({
 
     require "plugins.render-markdown",
 
+    require "plugins.outline",
+
+    require "plugins.nvim-treesitter-context",
+
     require "plugins.nabla",
 
     require "plugins.cord",

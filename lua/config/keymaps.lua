@@ -155,6 +155,10 @@ function M.lazygit_keymaps()
     vim.keymap.set("n", "<leader>lg", "<cmd>LazyGit<CR>", { desc = "LazyGit" })
 end
 
+function M.outline_keymaps()
+    vim.keymap.set("n", "<leader>to", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+end
+
 function M.bind_telescope_keys()
     -- Telescope keymaps
     local builtin = require('telescope.builtin')

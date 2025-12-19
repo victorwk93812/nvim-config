@@ -31,11 +31,26 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "lua_ls",
-                "rust_analyzer",
-                "pyright", 
-                -- "texlab",
-				-- "clangd", 
+                -- 2025-12-10 update abandoned LSs (too old for Arch)
+                -- Disable them in config/autocmds.lua outline_supported list 
+                -- as well to disable outline window popout by default
+                -- [List empty]
+                -- ===== LSs =====
+                "lua_ls", -- lua
+                "rust_analyzer", -- rust
+                "pyright", -- python
+                "jdtls", -- java
+                "texlab", -- tex
+				"clangd", -- c, cpp
+                "bashls", -- bash-language-server for bash, zsh, etc.
+                "cmake", -- cmake-language-server for cmake
+                "gopls", -- go
+                "denols", -- deno for javascript, typescript, deno
+                "docker_language_server", -- docker-language-server for docker
+                "zls", -- zig
+                "jsonls", -- json
+                "yamlls", -- yaml
+                -- "hls", -- haskell-language-server for haskell (ghc not installed)
             },
             handlers = {
                 function(server_name) -- default handler (optional)

@@ -20,6 +20,8 @@ require("lazy").setup({
     -- modular approach: using `require 'path/name'` will
     -- include a plugin definition from file lua/path/name.lua
     -- List plugins here
+    require "plugins.vimtex",
+
     require "plugins.lualine",
     require "plugins.catppuccin",
     require "plugins.indent-blankline",
@@ -28,8 +30,6 @@ require("lazy").setup({
     require "plugins.telescope",
 
     require "plugins.treesitter",
-
-    require "plugins.vimtex",
 
     require "plugins.luasnip",
     require "plugins.lsp",
@@ -65,6 +65,7 @@ require("lazy").setup({
     require "plugins.copilot",
 
     require "plugins.which-key",
+
     -- automatically check for plugin updates
     -- checker = { enabled = true },
 })

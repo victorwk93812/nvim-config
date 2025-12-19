@@ -3,10 +3,10 @@ local M = {}
 function M.setup_workspace()
     -- Configuration: Filetypes that should trigger the Outline
     local outline_supported = { 
-        "markdown", 
-        "lua", 
-        "python", 
-        "go", 
+        "markdown",
+        "lua",
+        "python",
+        "go",
         "rust",
         "javascript",
         "typescript",
@@ -17,12 +17,15 @@ function M.setup_workspace()
         "html",
         "css",
         "c",
+        "tex",
         "sh",
         "zsh",
         "bash",
         "cs",
-        "php",
         "cpp",
+        "zig",
+        -- "php",
+        -- "haskell",
     }
 
     -- 1. Open NvimTree on Startup (VimEnter)
@@ -40,7 +43,7 @@ function M.setup_workspace()
             -- logic: If is entering a real file (not a special buffer) and not NvimTree
             if is_real_file and filetype ~= "NvimTree" then
                 require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
-                print("Hello from nvim-tree autocmd!", is_real_file)
+                -- print("Hello from nvim-tree autocmd!", is_real_file)
             end
         end,
     })

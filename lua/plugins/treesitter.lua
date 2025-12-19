@@ -10,9 +10,12 @@ return {
 				sync_install = false,
 				highlight = { 
 					enable = true, 
-					disable = {
-						"latex", 
-					},
+                    -- Treesitter takes over latex syntax highlighting over 
+                    -- VimTex so let it highlight, otherwise no highlighting 
+                    -- is enabled
+					-- disable = {
+					-- 	"latex", 
+					-- },
 				},
 				indent = { enable = true },  
 			})

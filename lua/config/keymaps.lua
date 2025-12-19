@@ -143,6 +143,7 @@ function M.copilot_keymaps()
     vim.keymap.set('n', '<Leader>cp', function() 
       panel.open() 
     end, { desc = "[Copilot] Open Panel" })
+    vim.keymap.set('n', '<Leader>cc', "<cmd>Copilot toggle<CR>", { desc = "[Copilot] Toggle Copilot" })
 end
 
 function M.auto_session_keymaps()

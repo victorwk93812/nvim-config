@@ -40,6 +40,8 @@ require("lazy").setup({
 
     require "plugins.todo-comments",
 
+    require "plugins.autopairs",
+
     require "plugins.gitsigns", 
 
     require "plugins.lazygit", 

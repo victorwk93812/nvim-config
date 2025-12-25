@@ -66,6 +66,8 @@ require("lazy").setup({
 
     require "plugins.copilot",
 
+    require "plugins.avante",
+
     require "plugins.which-key",
 
     -- automatically check for plugin updates

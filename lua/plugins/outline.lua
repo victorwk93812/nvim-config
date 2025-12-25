@@ -7,7 +7,7 @@ return {
             require("outline").setup {
                 -- Your setup config here
                 outline_window = {
-                    width = 20,
+                    width = 15,
                     relative_width = true,
                 },
             }

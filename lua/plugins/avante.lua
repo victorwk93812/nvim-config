@@ -1,13 +1,16 @@
--- 2025/12/25 update: 
+-- 2025/12/29 update: 
 -- Notice there are usage limits of all models.
--- Currently I'm using gemini free tier, which has rate limit about 20 requests per day for each model.  
+-- Copilot Pro activated, providing a many more models to choose from.
+-- Now using gemini-3-flash-preview as default model.
+-- Previously used gemini free tier, which has rate limit about 20 requests per day for each model.  
 --
--- Model using strategy:
+-- Known issues:
+-- 1. Models cannot edit files if the outline plugin window is open. 
+--   Workaround: close the outline window (keymap <leader>to) before requesting code edits.
+--
+-- Gemini-cli free tier model using strategy:
 -- Default: use gemini_model_1 with ACP support until rate limit of gemini_model_1
 -- After rate limit: Switch to gemini, which is configured to use model gemini_model_2
---
--- Known bugs:
--- GPT cannot inline edit code.  
 local gemini_model_1 = "gemini-3-flash-preview"
 local gemini_model_2 = "gemini-2.5-flash"
 
@@ -28,9 +31,10 @@ return {
             -- this file can contain specific instructions for your project
             instructions_file = "avante.md",
             windows = {
-                -- position = "right", -- "right" | "left" | "top" | "bottom"
+                position = "right", -- "right" | "left" | "top" | "bottom"
                 -- wrap = true, -- similar to vim.o.wrap
-                width = 30, -- <== CHANGE THIS (Default is usually 30 or 40)
+                width = 30, -- for vertical layout, default = 30
+                -- height = 20, -- for horizontal layout, default = 30
                 -- sidebar_header = {
                 --     align = "center", -- "center" | "left" | "right"
                 --     rounded = true,
@@ -38,17 +42,19 @@ return {
                 -- Optional: Set transparency (pseudo-transparency) for the input box
                 -- winblend = 10, 
                 input = {
-                    height = 13,
+                    height = 13, -- for vertical layout, default = 8
                 },
             },
             -- This sets the default model provider
             -- for example the free claude sonnet chat
             -- provider = "claude",
             -- google gemini with ACP support  
-            provider = "gemini-cli",
+            -- provider = "gemini-cli",
             -- provider = "gemini-cli-alt",
             -- could also use with no ACP
             -- provider = "gemini",
+            -- Currently using, with Copilot Pro activated
+            provider = "copilot",
 
             -- ***Note that the model selector list does not include all acp-supported models***
             -- ***If want to use ACP provider, must set that as the default provider***

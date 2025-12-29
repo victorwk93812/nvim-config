@@ -17,10 +17,9 @@ return {
         -- local cmp_lsp = require("cmp_nvim_lsp")
         -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        local custom_attach = function()
-            print("LSP started.");
-            require("config.keymaps").bind_lsp_attach_keys()
-        end
+        -- local custom_attach = function()
+        --             require("config.keymaps").bind_lsp_attach_keys()
+        -- end
         -- local capabilities = vim.tbl_deep_extend(
         --     "force",
         --     {},
@@ -29,6 +28,7 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+        
         require("mason-lspconfig").setup({
             ensure_installed = {
                 -- 2025-12-10 update abandoned LSs (too old for Arch)
@@ -56,7 +56,7 @@ return {
                 function(server_name) -- default handler (optional)
                     -- Setup LSP autocompletion capabilities on each installation of LSP
                     require("lspconfig")[server_name].setup {
-                        on_attach = custom_attach, 
+                        -- on_attach = custom_attach, 
                         capabilities = capabilities
                     }
                 end,

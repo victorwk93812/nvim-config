@@ -71,7 +71,25 @@ function M.setup_workspace()
     })
 end
 
+function M.setup_lsp_attach()
+    vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+        callback = function(event)
+            -- 'event.buf' contains the buffer number of the file where LSP attached
+            print("LSP Attached to buffer " .. event.buf) -- You will see this in :messages now
+            
+            -- Call your external keymap function
+            -- We wrap it in pcall just in case the module isn't found
+            local status, err = pcall(require("config.keymaps").bind_lsp_attach_keys, event.buf)
+            if not status then
+                print("Error loading keymaps: " .. err)
+            end
+        end,
+    })
+end
+
 -- !!! CALL THE FUNCTIONS HERE !!!
 M.setup_workspace()
+M.setup_lsp_attach()
 
 return M

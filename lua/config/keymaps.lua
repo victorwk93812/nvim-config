@@ -182,24 +182,29 @@ function M.bind_luasnip_keys()
     end, {silent = true})
 end
 
-function M.bind_lsp_attach_keys()
-    -- LSP keymaps on LSP attach
-    vim.keymap.set('n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', { desc = "LSP go to declaration" })
-    vim.keymap.set('n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', { desc = "LSP go to definition" })
-    vim.keymap.set('n','<leader>K','<cmd>lua vim.lsp.buf.hover()<CR>', { desc = "LSP hover definition" })
-    vim.keymap.set('n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', { desc = "LSP go to references" })
-    vim.keymap.set('n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', { desc = "LSP vim.lsp.buf.signature_help()" })
-    vim.keymap.set('n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', { desc = "LSP vim.lsp.buf.implementation()" })
-    vim.keymap.set('n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>', { desc = "LSP vim.lsp.buf.type_definition()" })
-    vim.keymap.set('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>', { desc = "LSP vim.lsp.buf.document_symbol()" })
-    vim.keymap.set('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { desc = "LSP vim.lsp.buf.workspace_symbol()" })
-    vim.keymap.set('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>', { desc = "LSP code quickfix suggestion" })
-    vim.keymap.set('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>', { desc = "LSP vim.lsp.buf.rename()" })
-    vim.keymap.set('n','<leader>=', '<cmd>lua vim.lsp.buf.format()<CR>', { desc = "LSP vim.lsp.buf.format()" })
-    vim.keymap.set('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', { desc = "LSP vim.lsp.buf.incoming_calls()" })
-    vim.keymap.set('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', { desc = "LSP vim.lsp.buf.outgoint_calls()" })
+function M.bind_lsp_attach_keys(bufnr)
+    local opts = { buffer = bufnr, remap = false }
 
-    vim.keymap.set('n', '<leader>R', '<cmd>LspRestart<CR>', { desc = "Restart LSP" })
+    -- LSP keymaps on LSP attach
+    -- See keymaps.lua and lsp.lua for usage
+    vim.keymap.set('n','<leader>gD','<cmd>lua vim.lsp.buf.declaration()<CR>', vim.tbl_extend("force", opts, { desc = "LSP go to declaration" }))
+    vim.keymap.set('n','<leader>gd','<cmd>lua vim.lsp.buf.definition()<CR>', vim.tbl_extend("force", opts, { desc = "LSP go to definition" }))
+    vim.keymap.set('n','<leader>K','<cmd>lua vim.lsp.buf.hover()<CR>', vim.tbl_extend("force", opts, { desc = "LSP hover definition" }))
+    vim.keymap.set('n','<leader>gr','<cmd>lua vim.lsp.buf.references()<CR>', vim.tbl_extend("force", opts, { desc = "LSP go to references" }))
+    vim.keymap.set('n','<leader>gs','<cmd>lua vim.lsp.buf.signature_help()<CR>', vim.tbl_extend("force", opts, { desc = "LSP signature help" }))
+    vim.keymap.set('n','<leader>gi','<cmd>lua vim.lsp.buf.implementation()<CR>', vim.tbl_extend("force", opts, { desc = "LSP implementation" }))
+    vim.keymap.set('n','<leader>gt','<cmd>lua vim.lsp.buf.type_definition()<CR>', vim.tbl_extend("force", opts, { desc = "LSP type definition" }))
+    vim.keymap.set('n','<leader>gw','<cmd>lua vim.lsp.buf.document_symbol()<CR>', vim.tbl_extend("force", opts, { desc = "LSP document symbol" }))
+    vim.keymap.set('n','<leader>gW','<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', vim.tbl_extend("force", opts, { desc = "LSP workspace symbol" }))
+    vim.keymap.set('n','<leader>af','<cmd>lua vim.lsp.buf.code_action()<CR>', vim.tbl_extend("force", opts, { desc = "LSP code action" }))
+    vim.keymap.set('n','<leader>ar','<cmd>lua vim.lsp.buf.rename()<CR>', vim.tbl_extend("force", opts, { desc = "LSP rename" }))
+    vim.keymap.set('n','<leader>=', '<cmd>lua vim.lsp.buf.format()<CR>', vim.tbl_extend("force", opts, { desc = "LSP format buffer" }))
+    vim.keymap.set('n','<leader>ai','<cmd>lua vim.lsp.buf.incoming_calls()<CR>', vim.tbl_extend("force", opts, { desc = "LSP incoming calls" }))
+    vim.keymap.set('n','<leader>ao','<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', vim.tbl_extend("force", opts, { desc = "LSP outgoing calls" }))
+
+    -- Note: LspRestart is a global command, so strictly speaking it doesn't *need* the buffer ID, 
+    -- but keeping it here is fine so it's only available when LSP is active.
+    vim.keymap.set('n', '<leader>R', '<cmd>LspRestart<CR>', vim.tbl_extend("force", opts, { desc = "Restart LSP" }))
 end
 
 function M.bind_gitsigns_keys(bufnr)

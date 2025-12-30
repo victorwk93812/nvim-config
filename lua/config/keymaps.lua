@@ -19,6 +19,11 @@ local function load_useful_keymaps()
         return "m`" .. vim.v.count .. "O<Esc>``"
     end, { desc = "Insert <count> (default 1) lines above current line", expr = true })
 
+    -- New buffer navigation keymaps
+    vim.keymap.set("n", "<leader>bl", ":ls<CR>", { desc = "List buffers" }) -- alternatively, use telescope <leader>fb
+    vim.keymap.set("n", "<leader>bn", ":bn<CR>", { desc = "Next buffer" })
+    vim.keymap.set("n", "<leader>bp", ":bp<CR>", { desc = "Previous buffer" })
+
     -- Visual mode keymaps
     vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Select lines in v-mode, move selected lines down and auto-indent" })
     vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Select lines in v-mode, move selcted lines up and auto-indent" })

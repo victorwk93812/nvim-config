@@ -48,27 +48,28 @@ function M.setup_workspace()
         end,
     })
 
+    -- Too many bugs integrating with avante, so disabling for now
     -- 2. Open Outline on FileType detection
     -- This fires whenever a buffer sets its language (start-up or later)
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = outline_supported,
-        callback = function()
-            -- We double-check that we are not in a special buffer (like a floating window or NvimTree)
-            local buf_name = vim.api.nvim_buf_get_name(0)
-            -- Helper: Check if the argument is a directory
-            local buftype = vim.bo.buftype
-            local filetype = vim.bo.filetype
-
-            -- "Real" files have an empty buftype. 
-            -- NvimTree, Terminals, and Dashboards have 'nofile', 'terminal', etc.
-            local is_real_file = (buftype == "")
-
-            if buf_name ~= "" and is_real_file then
-                -- Use pcall to avoid errors if outline isn't loaded yet
-                pcall(vim.cmd, "OutlineOpen")
-            end
-        end,
-    })
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --     pattern = outline_supported,
+    --     callback = function()
+    --         -- We double-check that we are not in a special buffer (like a floating window or NvimTree)
+    --         local buf_name = vim.api.nvim_buf_get_name(0)
+    --         -- Helper: Check if the argument is a directory
+    --         local buftype = vim.bo.buftype
+    --         local filetype = vim.bo.filetype
+    --
+    --         -- "Real" files have an empty buftype. 
+    --         -- NvimTree, Terminals, and Dashboards have 'nofile', 'terminal', etc.
+    --         local is_real_file = (buftype == "")
+    --
+    --         if buf_name ~= "" and is_real_file then
+    --             -- Use pcall to avoid errors if outline isn't loaded yet
+    --             pcall(vim.cmd, "OutlineOpen")
+    --         end
+    --     end,
+    -- })
 end
 
 function M.setup_lsp_attach()

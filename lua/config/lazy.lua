@@ -34,17 +34,23 @@ require("lazy").setup({
     require "plugins.luasnip",
     require "plugins.lsp",
 
+    require "plugins.nvim-dap",
+
     require "plugins.trouble",
 
     -- require "plugins.peek",
+
+    require "plugins.typst-preview",
+
+    require "plugins.rustaceanvim",
 
     require "plugins.todo-comments",
 
     require "plugins.autopairs",
 
-    require "plugins.gitsigns", 
+    require "plugins.gitsigns",
 
-    require "plugins.lazygit", 
+    require "plugins.lazygit",
 
     require "plugins.auto-session",
 

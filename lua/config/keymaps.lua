@@ -84,6 +84,16 @@ function M.peek_keymaps()
     vim.keymap.set("n", "<leader>pc", ":PeekClose<CR>", { desc = "Close markdown preview" })
 end
 
+function M.typst_preview_keymaps()
+    -- typst-preview.nvim keymaps
+    -- Note: <leader>tt is taken by TodoTelescope, hence capital <leader>tT for toggle.
+    vim.keymap.set("n", "<leader>tp", ":TypstPreview<CR>", { desc = "Typst preview open" })
+    vim.keymap.set("n", "<leader>ts", ":TypstPreviewStop<CR>", { desc = "Typst preview stop" })
+    vim.keymap.set("n", "<leader>tT", ":TypstPreviewToggle<CR>", { desc = "Typst preview toggle" })
+    vim.keymap.set("n", "<leader>tf", ":TypstPreviewFollowCursorToggle<CR>", { desc = "Typst preview follow-cursor toggle" })
+    vim.keymap.set("n", "<leader>tu", ":TypstPreviewUpdate<CR>", { desc = "Typst preview update binary" })
+end
+
 function M.nvimtree_keymaps()
     -- nvim-tree keymaps
     vim.keymap.set("n", "<leader>nt", ":NvimTreeToggle<CR>", {desc = "Toggle nvim-tree" })
@@ -185,6 +195,68 @@ function M.bind_luasnip_keys()
             ls.change_choice(1)
         end
     end, {silent = true})
+end
+
+function M.bind_dap_keys()
+    local dap = require("dap")
+    local dapui_ok, dapui = pcall(require, "dapui")
+
+    -- Global (not buffer-scoped) because a debug session may span many buffers.
+    local map = function(lhs, rhs, desc)
+        vim.keymap.set("n", lhs, rhs, { silent = true, desc = desc })
+    end
+
+    -- Stepping / control
+    map("<F5>",   function() dap.continue() end,  "DAP continue / start")
+    map("<F10>",  function() dap.step_over() end, "DAP step over")
+    map("<F11>",  function() dap.step_into() end, "DAP step into")
+    map("<F12>",  function() dap.step_out() end,  "DAP step out")
+
+    -- Breakpoints
+    map("<leader>db", function() dap.toggle_breakpoint() end, "DAP toggle breakpoint")
+    map("<leader>dB", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, "DAP conditional breakpoint")
+    map("<leader>dp", function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end, "DAP log point")
+    map("<leader>dC", function() dap.clear_breakpoints() end, "DAP clear all breakpoints")
+
+    -- Session control
+    map("<leader>dc", function() dap.continue() end,     "DAP continue")
+    map("<leader>dn", function() dap.step_over() end,    "DAP next (step over)")
+    map("<leader>di", function() dap.step_into() end,    "DAP step into")
+    map("<leader>do", function() dap.step_out() end,     "DAP step out")
+    map("<leader>dr", function() dap.repl.toggle() end,  "DAP toggle REPL")
+    map("<leader>dl", function() dap.run_last() end,     "DAP run last")
+    map("<leader>dt", function() dap.terminate() end,    "DAP terminate")
+    map("<leader>dR", function() dap.restart() end,      "DAP restart")
+    map("<leader>dh", function() require("dap.ui.widgets").hover() end, "DAP hover variable")
+
+    if dapui_ok then
+        map("<leader>du", function() dapui.toggle() end, "DAP toggle UI")
+        map("<leader>de", function() dapui.eval(nil, { enter = true }) end, "DAP eval under cursor")
+    end
+end
+
+function M.bind_rustaceanvim_keys(bufnr)
+    -- rustaceanvim buffer-local keymaps. Called from a FileType=rust autocmd
+    -- so `bufnr` is the rust buffer we are attaching to. `buffer = bufnr`
+    -- scopes each mapping to that specific buffer.
+    local map = function(lhs, rhs, desc)
+        vim.keymap.set("n", lhs, rhs, { silent = true, buffer = bufnr, desc = desc })
+    end
+
+    map("<leader>a",  function() vim.cmd.RustLsp("codeAction") end, "Rust code action (grouped)")
+    map("K",          function() vim.cmd.RustLsp({ "hover", "actions" }) end, "Rust hover actions")
+    map("<leader>rr", function() vim.cmd.RustLsp("runnables") end,   "Rust runnables")
+    map("<leader>rR", function() vim.cmd.RustLsp({ "runnables", bang = true }) end, "Rust run last")
+    map("<leader>rd", function() vim.cmd.RustLsp("debuggables") end, "Rust debuggables")
+    map("<leader>rD", function() vim.cmd.RustLsp({ "debuggables", bang = true }) end, "Rust debug last")
+    map("<leader>rt", function() vim.cmd.RustLsp("testables") end,   "Rust testables")
+    map("<leader>rm", function() vim.cmd.RustLsp("expandMacro") end, "Rust expand macro")
+    map("<leader>rc", function() vim.cmd.RustLsp("openCargo") end,   "Rust open Cargo.toml")
+    map("<leader>rp", function() vim.cmd.RustLsp("parentModule") end, "Rust parent module")
+    map("<leader>rj", function() vim.cmd.RustLsp("joinLines") end,   "Rust join lines")
+    map("<leader>re", function() vim.cmd.RustLsp("explainError") end, "Rust explain error")
+    map("<leader>rh", function() vim.cmd.RustLsp({ "view", "hir" }) end, "Rust view HIR")
+    map("<leader>rs", function() vim.cmd.RustLsp("ssr") end,         "Rust structural search/replace")
 end
 
 function M.bind_lsp_attach_keys(bufnr)

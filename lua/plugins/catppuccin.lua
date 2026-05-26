@@ -82,12 +82,6 @@ return {
 						enabled = true,
 						indentscope_color = "",
 					},
-					require('lualine').setup {
-						options = {
-							theme = "catppuccin"
-							-- ... the rest of your lualine config
-						}
-					}
 				},
 			}) 
 			vim.cmd.colorscheme "catppuccin"

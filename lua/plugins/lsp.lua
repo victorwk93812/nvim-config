@@ -14,89 +14,74 @@ return {
     },
     config = function()
         local cmp = require('cmp')
-        -- local cmp_lsp = require("cmp_nvim_lsp")
-        -- Set up lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        -- local custom_attach = function()
-        --             require("config.keymaps").bind_lsp_attach_keys()
-        -- end
-        -- local capabilities = vim.tbl_deep_extend(
-        --     "force",
-        --     {},
-        --     vim.lsp.protocol.make_client_capabilities(),
-        --     cmp_lsp.default_capabilities())
 
         require("fidget").setup({})
-        require("mason").setup()
-        
+
+        -- Mason kept for ad-hoc tools (formatters, linters not in distro repos).
+        -- LSPs + codelldb live on the system; see README.
+        require("mason").setup({ max_concurrent_installers = 1 })
         require("mason-lspconfig").setup({
-            ensure_installed = {
-                -- 2025-12-10 update abandoned LSs (too old for Arch)
-                -- Disable them in config/autocmds.lua outline_supported list 
-                -- as well to disable outline window popout by default
-                -- [List empty]
-                -- ===== LSs =====
-                "lua_ls", -- lua
-                "rust_analyzer", -- rust
-                "pyright", -- python
-                "jdtls", -- java
-                "texlab", -- tex
-				"clangd", -- c, cpp
-                "bashls", -- bash-language-server for bash, zsh, etc.
-                "cmake", -- cmake-language-server for cmake
-                "gopls", -- go
-                "denols", -- deno for javascript, typescript, deno
-                "docker_language_server", -- docker-language-server for docker
-                "zls", -- zig
-                "jsonls", -- json
-                "yamlls", -- yaml
-                -- "hls", -- haskell-language-server for haskell (ghc not installed)
+            ensure_installed = {},
+            automatic_enable = false,
+        })
+
+        -- ------------------------------------------------------------------
+        -- LSP configuration (Neovim 0.11+ API: vim.lsp.config / vim.lsp.enable).
+        -- nvim-lspconfig ships preset configs under lsp/<name>.lua on the
+        -- runtimepath, so we only need to add capabilities and enable.
+        -- ------------------------------------------------------------------
+        vim.lsp.config('*', { capabilities = capabilities })
+
+        -- Override lua_ls so it understands the `vim` global when editing this
+        -- config itself.
+        vim.lsp.config('lua_ls', {
+            capabilities = capabilities,
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim', 'it', 'describe', 'before_each', 'after_each' },
+                    },
+                    workspace = { checkThirdParty = false },
+                    telemetry = { enable = false },
+                },
             },
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    -- Setup LSP autocompletion capabilities on each installation of LSP
-                    require("lspconfig")[server_name].setup {
-                        -- on_attach = custom_attach, 
-                        capabilities = capabilities
-                    }
-                end,
-                -- ["lua_ls"] = function()
-                --     local lspconfig = require("lspconfig")
-                --     lspconfig.lua_ls.setup {
-                --         capabilities = capabilities,
-                --         settings = {
-                --             Lua = {
-                --                 diagnostics = {
-                --                     globals = { "vim", "it", "describe", "before_each", "after_each" },
-                --                 }
-                --             }
-                --         }
-                --     }
-                -- end,
-            }
+        })
+
+        -- rust_analyzer omitted on purpose; rustaceanvim owns it.
+        vim.lsp.enable({
+            'lua_ls',
+            'pyright',
+            'jdtls',
+            'texlab',
+            'clangd',
+            'bashls',
+            'cmake',
+            'gopls',
+            'denols',
+            'zls',
+            'jsonls',
+            'yamlls',
+            'tinymist',
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = require("config.keymaps").nvim_cmp_keymaps(cmp, cmp_select),
-            sources = cmp.config.sources(
-                {
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' }, -- For luasnip users.
-                    { name = 'buffer' },
-                    { name = 'path' },
-                }
-            )
+            sources = cmp.config.sources({
+                { name = 'nvim_lsp' },
+                { name = 'luasnip' },
+                { name = 'buffer' },
+                { name = 'path' },
+            }),
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
@@ -106,5 +91,5 @@ return {
                 prefix = "",
             },
         })
-    end
+    end,
 }

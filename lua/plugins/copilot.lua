@@ -8,7 +8,7 @@ return {
             require('copilot').setup({
                 suggestion = {
                     enabled = true,
-                    auto_trigger = true, -- I recommend setting this to true for the "ghost text" experience
+                    auto_trigger = false, -- ghost-text auto-suggestions off by default; toggle with <leader>cc
                     keymap = {
                         -- Set these to false to disable the internal keymaps
                         accept = false, 

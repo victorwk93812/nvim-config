@@ -72,7 +72,8 @@ require("lazy").setup({
 
     require "plugins.copilot",
 
-    require "plugins.avante",
+    -- too much problems
+    -- require "plugins.avante",
 
     require "plugins.which-key",
 

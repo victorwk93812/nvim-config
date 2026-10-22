@@ -18,13 +18,13 @@ return {
             dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
             dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 
-            -- codelldb adapter (system pkg codelldb-bin from AUR). Shared by C/C++/Zig.
+            -- codelldb adapter (Mason, or AUR codelldb-bin; see config/codelldb.lua). Shared by C/C++/Zig.
             -- Rust uses rustaceanvim's own adapter binding; see plugins/rustaceanvim.lua.
             dap.adapters.codelldb = {
                 type = 'server',
                 port = '${port}',
                 executable = {
-                    command = '/usr/lib/codelldb/adapter/codelldb',
+                    command = require('config.codelldb').adapter,
                     args = { '--port', '${port}' },
                 },
             }

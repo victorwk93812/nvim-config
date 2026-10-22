@@ -18,13 +18,25 @@ return {
 
         require("fidget").setup({})
 
-        -- Mason kept for ad-hoc tools (formatters, linters not in distro repos).
-        -- LSPs + codelldb live on the system; see README.
+        -- Most LSPs live on the system (pacman); see README.
+        -- Mason installs the ones that are AUR-only on Arch, plus ad-hoc tools.
         require("mason").setup({ max_concurrent_installers = 1 })
         require("mason-lspconfig").setup({
             ensure_installed = {},
             automatic_enable = false,
         })
+
+        -- Mason package names, installed on first start if missing.
+        local mason_packages = { 'json-lsp', 'cmake-language-server', 'jdtls', 'codelldb' }
+        local registry = require('mason-registry')
+        registry.refresh(function()
+            for _, name in ipairs(mason_packages) do
+                local pkg = registry.get_package(name)
+                if not pkg:is_installed() and not pkg:is_installing() then
+                    pkg:install()
+                end
+            end
+        end)
 
         -- ------------------------------------------------------------------
         -- LSP configuration (Neovim 0.11+ API: vim.lsp.config / vim.lsp.enable).

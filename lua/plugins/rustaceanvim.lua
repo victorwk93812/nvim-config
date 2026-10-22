@@ -10,9 +10,9 @@ return {
             local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
             local capabilities = ok and cmp_nvim_lsp.default_capabilities() or vim.lsp.protocol.make_client_capabilities()
 
-            -- System codelldb-bin (AUR). Avoids Mason download.
-            local codelldb_adapter = '/usr/lib/codelldb/adapter/codelldb'
-            local liblldb           = '/usr/lib/codelldb/lldb/lib/liblldb.so'
+            -- codelldb from Mason, or AUR codelldb-bin (see config/codelldb.lua).
+            local codelldb_adapter = require('config.codelldb').adapter
+            local liblldb           = require('config.codelldb').liblldb
 
             vim.g.rustaceanvim = {
                 server = {
